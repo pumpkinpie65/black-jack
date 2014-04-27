@@ -1,6 +1,6 @@
 /*
  * David Zima
- * created: 4/15/14 last updated: 4/17/14
+ * created: 4/15/14 last updated: 4/26/14
  * CS 182 Lab Project 4 Link List Card Game
  */
 /**
@@ -16,8 +16,6 @@
  */
 package blackjack.models;
 
-import blackjack.models.Card;
-
 /**
  *
  * @author David
@@ -30,7 +28,7 @@ public class CardList {
     public CardList(int num) {
         numcards = num;   //set numcards in the deck
         for (int i = 0; i < num; i++) {  // load the cards
-            Card temp = new Card(i, null, -1);  //added second 2 methods for constructor to work
+            Card temp = new Card(i);
             if (firstcard != null) {
                 temp.setNext(firstcard);
             }

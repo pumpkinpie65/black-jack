@@ -6,7 +6,6 @@
 package blackjack.views;
 
 import blackjack.BlackJack;
-import blackjack.models.CardList;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,7 +36,10 @@ public class Window extends JFrame implements ActionListener {
     public Window(BlackJack newGameController)
     {
         blackJack = newGameController;
+        blackJack.startGame();
         init();
+        
+        centerPanel.paintComponent(centerPanel.getGraphics(), blackJack.getDeck());
     }
 
     private void init()
@@ -69,7 +71,7 @@ public class Window extends JFrame implements ActionListener {
     
     ////////////              MAIN      ////////////////////////
     public static void main(String[] args) {
-        Window window = new Window();
+        Window window = new Window(new BlackJack());
         
     }
 

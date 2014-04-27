@@ -24,6 +24,18 @@ public class BlackJack {
         Window window = new Window(new BlackJack());
     }
     
+    public CardList getDeck() {
+        return deck;
+    }
+    
+    public CardList getPlayerHand() {
+        return playerHand;
+    }
+    
+    public CardList getDealerHand() {
+        return dealerHand;
+    }
+    
     public void startGame()
     {
         printDeck(deck);
