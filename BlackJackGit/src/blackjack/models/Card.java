@@ -115,7 +115,7 @@ public class Card extends Link {
             case 13:
             case 26:
             case 39:
-                rank = 1;
+                rank = 11;
                 name = "Ace";
                 break;
             case 1:
@@ -232,7 +232,8 @@ public class Card extends Link {
     
     private Image loadCardFace(int cardNum)
     {
-        ImageIcon imageIcon = new ImageIcon("../images/gbCard" + cardNum + ".gif");
+        //ImageIcon imageIcon = new ImageIcon("../images/gbCard" + cardNum + ".gif");
+        ImageIcon imageIcon = new ImageIcon("src/blackjack/images/gbCard" + cardNum + ".gif");
         Image image = imageIcon.getImage();
         
         if (image == null) {

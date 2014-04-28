@@ -55,6 +55,9 @@ public class BJPanel extends JPanel {
         Card current = deck.getFirstCard();
         while (current != null) {
             Image tempimage = current.getCardImage();
+            
+            //System.out.println("Drawing at " + xpos + ", " + ypos);
+            
             g.drawImage(tempimage, xpos, ypos, this);
             // note: tempimage member variable must be set BEFORE paint is called
             xpos += 80;

@@ -7,6 +7,7 @@ package blackjack.views;
 
 import blackjack.BlackJack;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -40,6 +41,7 @@ public class Window extends JFrame implements ActionListener {
         init();
         
         centerPanel.paintComponent(centerPanel.getGraphics(), blackJack.getDeck());
+        //centerPanel.paintComponent(new Graphics(), blackJack.getDeck());
     }
 
     private void init()
