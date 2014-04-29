@@ -1,6 +1,6 @@
 /*
  * David Zima
- * created: 4/15/14 last updated: 4/15/14
+ * created: 4/15/14 last updated: 4/29/14
  * CS 182 Lab Project 4 Link List Card Game
  */
 package blackjack;
@@ -61,7 +61,7 @@ public class BlackJack {
         emptyHands();
         //printDeck(deck);
         shuffleDeck();
-        printDeck(deck);
+        //printDeck(deck);
         
         dealCards();
         
@@ -84,6 +84,8 @@ public class BlackJack {
     {
         playerHand = new CardList(0);
         dealerHand = new CardList(0);
+        playerScore = 0;
+        dealerScore = 0;
     }
     
     public void shuffleDeck()
@@ -160,13 +162,15 @@ public class BlackJack {
     
     public String getEndMessage()
     {
-        String endMessage = "Game Over";
+        print("Player score: " + playerScore + " Dealer Score: " + dealerScore);
         
-        if (playerScore > dealerScore)
+        String endMessage = "";
+        
+        if (playerHasHigherScoreThanDealer() && !playerBust() || dealerBust())
         {
             endMessage = "You win!";
         }
-        else if (playerScore == dealerScore)
+        else if (playerPush())
         {
             endMessage = "You push.";
         }
@@ -177,7 +181,39 @@ public class BlackJack {
         return endMessage;
     }
     
-    public void print(String message)
+    public boolean playerBust()
+    {
+        if (playerScore > 21)
+            return true;
+        else
+            return false;
+    }
+    
+    public boolean dealerBust()
+    {
+        if (dealerScore > 21)
+            return true;
+        else
+            return false;
+    }
+    
+    public boolean playerPush()
+    {
+        if (playerScore == dealerScore)
+            return true;
+        else
+            return false;
+    }
+    
+    public boolean playerHasHigherScoreThanDealer()
+    {
+        if (playerScore > dealerScore)
+            return true;
+        else
+            return false;
+    }
+    
+    public static void print(String message)
     {
         System.out.println(message);
     }

@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * David Zima
+ * created: 4/15/14 last updated: 4/29/14
+ * CS 182 Lab Project 4 Link List Card Game
  */
 package blackjack.views;
 
@@ -21,11 +21,19 @@ public class BJPanel extends JPanel {
 
     CardList playerHand;
     CardList dealerHand;
+    String message = "";
+    boolean displayDealerHand = false;
+    boolean displayScores = false;
+    int dealerScore = 0;
+    int playerScore = 0;
     
     public BJPanel(CardList thePlayerHand, CardList theDealerHand)
     {
         playerHand = thePlayerHand;
         dealerHand = theDealerHand;
+        message = "";
+        displayDealerHand = false;
+        displayScores = false;
     }
     
     @Override
@@ -34,14 +42,53 @@ public class BJPanel extends JPanel {
         System.out.println("BJPanel.paint");
         
         setBackground(new Color(0x005000));
-        setDeck(g);
+        printDeck(g);
         paintDealerHand(g);
         paintPlayerHand(g);
+        paintMessage(g);
+        
+        if (displayScores)
+        {
+            paintDealerScore(g);
+            paintPlayerScore(g);
+        }
         //super.paint(g); //To change body of generated methods, choose Tools | Templates.
         
     }
 
-    private Graphics setDeck(Graphics g) {
+    public void setPlayerHand(CardList hand)
+    {
+        playerHand = hand;
+        playerScore = 0;
+    }
+    
+    public void setDealerHand(CardList hand)
+    {
+        dealerHand = hand;
+        dealerScore = 0;
+    }
+    
+    public void setMessage(String newMessage) {
+        message = newMessage;
+    }
+    
+    public void setDisplayDealerHand(boolean shouldDisplayDealerHand) {
+        displayDealerHand = shouldDisplayDealerHand;
+    }
+    
+    public void setDisplayScores(boolean shouldDisplayScores) {
+        displayScores = shouldDisplayScores;
+    }
+    
+    public void setDealerScore(int newScore) {
+        dealerScore = newScore;
+    }
+    
+    public void setPlayerScore(int newScore) {
+        playerScore = newScore;
+    }
+    
+    private Graphics printDeck(Graphics g) {
 
         int xPos = 20;
         int yPos = 20;
@@ -58,17 +105,34 @@ public class BJPanel extends JPanel {
 
     private Graphics paintDealerHand(Graphics g) {
         
-        int xPos = 360;
+        int xPos = 300;
         int yPos = 20;
         
-        ImageIcon imageIcon = new ImageIcon("src/blackjack/images/gbCard52.gif");
-        Image backOfCardImage = imageIcon.getImage();
+        if (!displayDealerHand)
+        {
+            ImageIcon imageIcon = new ImageIcon("src/blackjack/images/gbCard52.gif");
+            Image backOfCardImage = imageIcon.getImage();
+
+            g.drawImage(backOfCardImage, xPos, yPos, this);
+
+            xPos += 80;
+
+            g.drawImage(dealerHand.getFirstCard().getNextCard().getCardImage(), xPos, yPos, this);
+        }
+        else
+        {
+            Card current = dealerHand.getFirstCard();
+            
+            while (current != null)
+            {
+                g.drawImage(current.getCardImage(), xPos, yPos, this);
+
+                xPos += 80;
+
+                current = current.getNextCard();
+            }
+        }
         
-        g.drawImage(backOfCardImage, xPos, yPos, this);
-        
-        xPos += 80;
-        
-        g.drawImage(dealerHand.getFirstCard().getNextCard().getCardImage(), xPos, yPos, this);
         
         return g;
     }
@@ -87,6 +151,27 @@ public class BJPanel extends JPanel {
             
             current = current.getNextCard();
         }
+        
+        return g;
+    }
+    
+    private Graphics paintMessage(Graphics g) {
+        
+        g.drawString(message, 360, 350);
+        
+        return g;
+    }
+    
+    private Graphics paintDealerScore(Graphics g) {
+        
+        g.drawString("Dealer Score: " + dealerScore, 600, 60);
+        
+        return g;
+    }
+    
+    private Graphics paintPlayerScore(Graphics g) {
+        
+        g.drawString("Player Score: " + playerScore, 600, 80);
         
         return g;
     }
