@@ -16,8 +16,8 @@ import blackjack.views.Window;
 public class BlackJack {
     
     private CardList deck;
-    private CardList playerHand = new CardList(0);
-    private CardList dealerHand = new CardList(0);
+    private CardList playerHand;
+    private CardList dealerHand;
     
     private int playerScore = 0;
     private int dealerScore = 0;
@@ -58,15 +58,19 @@ public class BlackJack {
     {
         //printDeck(deck);
         newDeck();
+        emptyHands();
         //printDeck(deck);
         shuffleDeck();
         printDeck(deck);
         
         dealCards();
         
-        print("Player Hand: " + calculateScoreFromHand(playerHand));
+        setPlayerScore(calculateScoreFromHand(playerHand));
+        setDealerScore(calculateScoreFromHand(dealerHand));
+        
+        print("Player Hand: " + playerScore);
         printDeck(playerHand);
-        print("Dealer Hand: " + calculateScoreFromHand(dealerHand));
+        print("Dealer Hand: " + dealerScore);
         printDeck(dealerHand);
         
     }
@@ -74,6 +78,12 @@ public class BlackJack {
     public void newDeck()
     {
         deck = new CardList(52);
+    }
+    
+    public void emptyHands()
+    {
+        playerHand = new CardList(0);
+        dealerHand = new CardList(0);
     }
     
     public void shuffleDeck()
@@ -121,11 +131,50 @@ public class BlackJack {
     public void playerHit()
     {
         playerHand.insertCard(deck.deleteCard(0));
+        playerScore = calculateScoreFromHand(playerHand);
     }
     
     public void dealerHit()
     {
         dealerHand.insertCard(deck.deleteCard(0));
+        dealerScore = calculateScoreFromHand(dealerHand);
+    }
+    
+    public boolean dealerShouldHit()
+    {
+        if (dealerScore < 17)
+        {
+            return true;
+        }
+        else
+            return false;
+    }
+    
+    public void playerStand()
+    {
+        while (dealerShouldHit())
+        {
+            dealerHit();
+        }
+    }
+    
+    public String getEndMessage()
+    {
+        String endMessage = "Game Over";
+        
+        if (playerScore > dealerScore)
+        {
+            endMessage = "You win!";
+        }
+        else if (playerScore == dealerScore)
+        {
+            endMessage = "You push.";
+        }
+        else
+        {
+            endMessage = "You lose all your money!";
+        }
+        return endMessage;
     }
     
     public void print(String message)

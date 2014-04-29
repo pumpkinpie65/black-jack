@@ -22,7 +22,7 @@ public class Window extends JFrame implements ActionListener {
 
     private static int winxpos = 0, winypos = 0;      // place window here
 
-    private JButton shuffleButton, exitButton, newButton;
+    private JButton hitButton, exitButton, standButton;
     private JPanel southPanel;
     private BJPanel centerPanel;
     private static JFrame myFrame = null;
@@ -40,7 +40,7 @@ public class Window extends JFrame implements ActionListener {
         blackJack.startGame();
         init();
         
-        centerPanel.paintComponent(centerPanel.getGraphics(), blackJack.getDeck());
+        //centerPanel.paintComponent(centerPanel.getGraphics(), blackJack.getDeck());
         //centerPanel.paintComponent(new Graphics(), blackJack.getDeck());
     }
 
@@ -49,18 +49,18 @@ public class Window extends JFrame implements ActionListener {
         myFrame = this;                 // need a static variable reference to a JFrame object
         southPanel = new JPanel();
         southPanel.setBackground(Color.white);
-        shuffleButton = new JButton("Shuffle");
-        southPanel.add(shuffleButton);
-        shuffleButton.addActionListener(this);
-        newButton = new JButton("New Deck");
-        southPanel.add(newButton);
-        newButton.addActionListener(this);
+        hitButton = new JButton("Hit");
+        southPanel.add(hitButton);
+        hitButton.addActionListener(this);
+        standButton = new JButton("Stand");
+        southPanel.add(standButton);
+        standButton.addActionListener(this);
         exitButton = new JButton("Exit");
         southPanel.add(exitButton);
         exitButton.addActionListener(this);
         getContentPane().add("South", southPanel);
 
-        centerPanel = new BJPanel();
+        centerPanel = new BJPanel(blackJack.getPlayerHand(), blackJack.getDealerHand());
         getContentPane().add("Center", centerPanel);
 
         //theDeck = new CardList(52);
@@ -85,12 +85,12 @@ public class Window extends JFrame implements ActionListener {
             dispose();
             System.exit(0);
         }
-        if (e.getSource() == shuffleButton) {
-            blackJack.shuffleDeck();
+        if (e.getSource() == hitButton) {
+            blackJack.playerHit();
             repaint();
         }
-        if (e.getSource() == newButton) {
-            blackJack.newDeck();
+        if (e.getSource() == standButton) {
+            blackJack.playerStand();
             repaint();
         }
     }

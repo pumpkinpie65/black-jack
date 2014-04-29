@@ -19,6 +19,15 @@ import javax.swing.JPanel;
  */
 public class BJPanel extends JPanel {
 
+    CardList playerHand;
+    CardList dealerHand;
+    
+    public BJPanel(CardList thePlayerHand, CardList theDealerHand)
+    {
+        playerHand = thePlayerHand;
+        dealerHand = theDealerHand;
+    }
+    
     @Override
     public void paint(Graphics g) {
         
@@ -26,7 +35,10 @@ public class BJPanel extends JPanel {
         
         setBackground(new Color(0x005000));
         setDeck(g);
+        paintDealerHand(g);
+        paintPlayerHand(g);
         //super.paint(g); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     private Graphics setDeck(Graphics g) {
@@ -44,7 +56,42 @@ public class BJPanel extends JPanel {
         return g;
     }
 
-    public void paintComponent(Graphics g, CardList deck) {
+    private Graphics paintDealerHand(Graphics g) {
+        
+        int xPos = 360;
+        int yPos = 20;
+        
+        ImageIcon imageIcon = new ImageIcon("src/blackjack/images/gbCard52.gif");
+        Image backOfCardImage = imageIcon.getImage();
+        
+        g.drawImage(backOfCardImage, xPos, yPos, this);
+        
+        xPos += 80;
+        
+        g.drawImage(dealerHand.getFirstCard().getNextCard().getCardImage(), xPos, yPos, this);
+        
+        return g;
+    }
+    
+    private Graphics paintPlayerHand(Graphics g) {
+        int xPos = 360;
+        int yPos = 360;
+        
+        Card current = playerHand.getFirstCard();
+        
+        while (current != null)
+        {
+            g.drawImage(current.getCardImage(), xPos, yPos, this);
+            
+            xPos += 80;
+            
+            current = current.getNextCard();
+        }
+        
+        return g;
+    }
+    
+    /*public void paintComponent(Graphics g, CardList deck) {
 
         System.out.println("BJPanel.paintComponent");
 
@@ -67,5 +114,5 @@ public class BJPanel extends JPanel {
             }
             current = current.getNextCard();
         } //while
-    }
+    }*/
 }
