@@ -95,7 +95,8 @@ public class Window extends JFrame implements ActionListener {
             centerPanel.setPlayerHand(blackJack.getPlayerHand());
             centerPanel.setMessage("");
             centerPanel.setDisplayDealerHand(false);
-            centerPanel.setDisplayScores(false);
+            centerPanel.setDisplayDealerScore(false);
+            centerPanel.setDisplayPlayerScore(false);
             repaint();
         }
         if (e.getSource() == hitButton) {
@@ -103,7 +104,9 @@ public class Window extends JFrame implements ActionListener {
             if (blackJack.playerBust())
             {
                 centerPanel.setMessage(blackJack.getEndMessage());
-                centerPanel.setDisplayScores(true);
+                centerPanel.setPlayerScore(blackJack.getPlayerScore());
+                centerPanel.setDisplayPlayerScore(true);
+                centerPanel.setDisplayDealerScore(false);
             }
                 
             repaint();
@@ -114,7 +117,8 @@ public class Window extends JFrame implements ActionListener {
             centerPanel.setDealerScore(blackJack.getDealerScore());
             centerPanel.setPlayerScore(blackJack.getPlayerScore());
             centerPanel.setDisplayDealerHand(true);
-            centerPanel.setDisplayScores(true);
+            centerPanel.setDisplayDealerScore(true);
+            centerPanel.setDisplayPlayerScore(true);
             repaint();
         }
     }

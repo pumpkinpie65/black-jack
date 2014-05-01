@@ -8,6 +8,7 @@ package blackjack.views;
 import blackjack.models.Card;
 import blackjack.models.CardList;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -22,8 +23,9 @@ public class BJPanel extends JPanel {
     CardList playerHand;
     CardList dealerHand;
     String message = "";
-    boolean displayDealerHand = false;
-    boolean displayScores = false;
+    boolean displayDealerHand;
+    boolean displayDealerScore;
+    boolean displayPlayerScore;
     int dealerScore = 0;
     int playerScore = 0;
     
@@ -33,7 +35,8 @@ public class BJPanel extends JPanel {
         dealerHand = theDealerHand;
         message = "";
         displayDealerHand = false;
-        displayScores = false;
+        displayDealerScore = false;
+        displayPlayerScore = false;
     }
     
     @Override
@@ -41,15 +44,21 @@ public class BJPanel extends JPanel {
         
         System.out.println("BJPanel.paint");
         
+        g.setFont(new Font("Arial", Font.PLAIN, 20));
+        
         setBackground(new Color(0x005000));
         printDeck(g);
         paintDealerHand(g);
         paintPlayerHand(g);
         paintMessage(g);
         
-        if (displayScores)
+        if (displayDealerScore)
         {
             paintDealerScore(g);
+        }
+        
+        if (displayPlayerScore)
+        {
             paintPlayerScore(g);
         }
         //super.paint(g); //To change body of generated methods, choose Tools | Templates.
@@ -76,8 +85,12 @@ public class BJPanel extends JPanel {
         displayDealerHand = shouldDisplayDealerHand;
     }
     
-    public void setDisplayScores(boolean shouldDisplayScores) {
-        displayScores = shouldDisplayScores;
+    public void setDisplayDealerScore(boolean shouldDisplayDealerScore) {
+        displayDealerScore = shouldDisplayDealerScore;
+    }
+    
+    public void setDisplayPlayerScore(boolean shouldDisplayPlayerScore) {
+        displayPlayerScore = shouldDisplayPlayerScore;
     }
     
     public void setDealerScore(int newScore) {
@@ -106,7 +119,7 @@ public class BJPanel extends JPanel {
     private Graphics paintDealerHand(Graphics g) {
         
         int xPos = 300;
-        int yPos = 20;
+        int yPos = 120;
         
         if (!displayDealerHand)
         {
@@ -138,7 +151,7 @@ public class BJPanel extends JPanel {
     }
     
     private Graphics paintPlayerHand(Graphics g) {
-        int xPos = 360;
+        int xPos = 300;
         int yPos = 360;
         
         Card current = playerHand.getFirstCard();
@@ -157,7 +170,7 @@ public class BJPanel extends JPanel {
     
     private Graphics paintMessage(Graphics g) {
         
-        g.drawString(message, 360, 350);
+        g.drawString(message, 300, 350);
         
         return g;
     }
